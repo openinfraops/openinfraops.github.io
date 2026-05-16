@@ -3,243 +3,695 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenInfraOps - Vision for Automated & Secure Infrastructure</title>
-<!-- FontAwesome pour les icônes de la tech et de GitHub -->
+<title>OpenInfraOps | Documentation des projets</title>
+<meta name="description" content="Portail de documentation des projets OpenInfraOps autour de la securite AD FS et de l'automatisation PowerShell DSC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
---bg-color: #0d1117;
---card-bg: #161b22;
---text-color: #c9d1d9;
---text-bright: #f0f6fc;
---accent-color: #58a6ff;
---border-color: #30363d;
+--bg: #07111f;
+--panel: rgba(7, 17, 31, 0.78);
+--text: #dce7f3;
+--muted: #93a7bb;
+--line: rgba(170, 197, 224, 0.18);
+--primary: #4dd0a8;
+--secondary: #7fc8ff;
+--shadow: 0 24px 60px rgba(2, 8, 15, 0.45);
+--radius-xl: 28px;
+--radius-lg: 20px;
+}
+
+* {
+box-sizing: border-box;
+}
+
+html {
+scroll-behavior: smooth;
 }
 
 body {
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-background-color: var(--bg-color);
-color: var(--text-color);
 margin: 0;
-padding: 0;
+font-family: "IBM Plex Sans", sans-serif;
+background:
+radial-gradient(circle at top left, rgba(127, 200, 255, 0.18), transparent 30%),
+radial-gradient(circle at top right, rgba(77, 208, 168, 0.18), transparent 32%),
+linear-gradient(180deg, #07111f 0%, #091625 100%);
+color: var(--text);
 line-height: 1.6;
 }
 
-header {
-text-align: center;
-padding: 5rem 2rem 3rem 2rem;
-border-bottom: 1px solid var(--border-color);
-background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+a {
+color: inherit;
 }
 
-/* Stylisation du logo OiO (Lunettes Geek / Roues dentées) */
-.logo-oio {
-font-size: 5rem;
-font-weight: bold;
-color: var(--text-bright);
-letter-spacing: -2px;
-margin-bottom: 1rem;
+.shell {
+width: min(1180px, calc(100% - 32px));
+margin: 0 auto;
+}
+
+.topbar {
+position: sticky;
+top: 0;
+z-index: 10;
+backdrop-filter: blur(14px);
+background: rgba(7, 17, 31, 0.72);
+border-bottom: 1px solid var(--line);
+}
+
+.topbar-inner {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
+padding: 16px 0;
+}
+
+.brand {
+display: flex;
+align-items: center;
+gap: 12px;
+text-decoration: none;
+}
+
+.brand-mark {
 display: inline-flex;
 align-items: center;
-gap: 5px;
-user-select: none;
+justify-content: center;
+width: 48px;
+height: 48px;
+border-radius: 16px;
+background: linear-gradient(135deg, rgba(77, 208, 168, 0.18), rgba(127, 200, 255, 0.18));
+border: 1px solid rgba(127, 200, 255, 0.28);
+font-size: 1.3rem;
 }
 
-.logo-oio .gear {
-color: var(--accent-color);
-animation: spin 20s linear infinite;
-display: inline-block;
+.brand-copy strong,
+.hero-copy h1,
+.section-title h2,
+.project-head h3 {
+font-family: "Space Grotesk", sans-serif;
 }
 
-/* Petite animation discrète sur la deuxième roue pour le style */
-.logo-oio .gear-reverse {
-animation: spin-back 20s linear infinite;
-}
-
-.logo-oio .bridge {
-color: var(--text-bright);
-font-family: "Courier New", Courier, monospace;
-font-weight: min-content;
-}
-
-header h1 {
-margin: 0;
-font-size: 2.8rem;
-color: var(--text-bright);
-}
-
-header p {
-font-size: 1.2rem;
-color: #8b949e;
-max-width: 600px;
-margin: 1rem auto 0 auto;
-}
-
-.container {
-max-width: 1000px;
-margin: 4rem auto;
-padding: 0 2rem;
-}
-
-.grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-gap: 2rem;
-}
-
-@media (max-width: 768px) {
-.grid { grid-template-columns: 1fr; }
-}
-
-.card {
-background-color: var(--card-bg);
-border: 1px solid var(--border-color);
-border-radius: 8px;
-padding: 2rem;
+.brand-copy {
 display: flex;
 flex-direction: column;
-justify-content: space-between;
-transition: transform 0.2s, border-color 0.2s;
 }
 
-.card:hover {
-transform: translateY(-4px);
-border-color: var(--accent-color);
-}
-
-.card h2 {
-margin-top: 0;
-color: var(--text-bright);
-display: flex;
-align-items: center;
-gap: 0.7rem;
-font-size: 1.5rem;
-}
-
-.card p {
-color: #8b949e;
-flex-grow: 1;
+.brand-copy strong {
 font-size: 1rem;
+letter-spacing: 0.03em;
 }
 
-.tags {
-margin: 1.5rem 0;
+.brand-copy span {
+font-size: 0.88rem;
+color: var(--muted);
 }
 
-.tag {
-background-color: #21262d;
-border: 1px solid var(--border-color);
-color: var(--accent-color);
-padding: 0.2rem 0.6rem;
-border-radius: 12px;
-font-size: 0.8rem;
-margin-right: 0.4rem;
-margin-bottom: 0.4rem;
-display: inline-block;
+.nav {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.nav a,
+.chip,
+.btn {
+border-radius: 999px;
+text-decoration: none;
+}
+
+.nav a {
+padding: 10px 14px;
+color: var(--muted);
+border: 1px solid transparent;
+transition: 0.2s ease;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+color: var(--text);
+border-color: var(--line);
+background: rgba(255, 255, 255, 0.03);
+}
+
+.hero {
+padding: 72px 0 42px;
+}
+
+.hero-panel {
+display: grid;
+grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.9fr);
+gap: 28px;
+align-items: stretch;
+}
+
+.hero-copy,
+.hero-aside,
+.project,
+.summary-card,
+.footer-panel {
+background: var(--panel);
+border: 1px solid var(--line);
+border-radius: var(--radius-xl);
+box-shadow: var(--shadow);
+}
+
+.hero-copy {
+padding: 40px;
+position: relative;
+overflow: hidden;
+}
+
+.hero-copy::after {
+content: "";
+position: absolute;
+inset: auto -60px -100px auto;
+width: 260px;
+height: 260px;
+background: radial-gradient(circle, rgba(77, 208, 168, 0.2), transparent 70%);
+pointer-events: none;
+}
+
+.eyebrow {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+padding: 8px 14px;
+background: rgba(127, 200, 255, 0.08);
+border: 1px solid rgba(127, 200, 255, 0.16);
+border-radius: 999px;
+color: var(--secondary);
+font-size: 0.88rem;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+
+.hero-copy h1 {
+font-size: clamp(2.6rem, 6vw, 4.7rem);
+line-height: 1;
+margin: 18px 0 18px;
+max-width: 12ch;
+}
+
+.hero-copy p {
+max-width: 60ch;
+font-size: 1.08rem;
+color: var(--muted);
+margin: 0;
+}
+
+.hero-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 14px;
+margin-top: 28px;
 }
 
 .btn {
-background-color: #21262d;
-color: var(--text-bright);
-text-decoration: none;
-padding: 0.7rem 1.2rem;
-border-radius: 6px;
-border: 1px solid var(--border-color);
 display: inline-flex;
 align-items: center;
-gap: 0.5rem;
+gap: 10px;
+padding: 13px 18px;
 font-weight: 600;
-transition: background-color 0.2s, border-color 0.2s;
+border: 1px solid var(--line);
+transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
-.btn:hover {
-background-color: #30363d;
-border-color: #8b949e;
+.btn:hover,
+.btn:focus-visible {
+transform: translateY(-2px);
 }
 
-footer {
-text-align: center;
-padding: 4rem;
-color: #8b949e;
-font-size: 0.9rem;
-border-top: 1px solid var(--border-color);
+.btn-primary {
+background: linear-gradient(135deg, rgba(77, 208, 168, 0.2), rgba(127, 200, 255, 0.18));
+border-color: rgba(127, 200, 255, 0.35);
 }
 
-footer a {
-color: var(--accent-color);
+.btn-secondary {
+background: rgba(255, 255, 255, 0.03);
+}
+
+.hero-aside {
+padding: 28px;
+display: grid;
+gap: 18px;
+}
+
+.aside-block {
+padding: 18px;
+border-radius: var(--radius-lg);
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+border: 1px solid rgba(170, 197, 224, 0.14);
+}
+
+.aside-block h2,
+.aside-block p {
+margin: 0;
+}
+
+.aside-block h2 {
+font-size: 1rem;
+margin-bottom: 8px;
+}
+
+.aside-block p,
+.list li,
+.project-copy p,
+.meta-card p,
+.summary-card p,
+.summary-card li,
+footer p {
+color: var(--muted);
+}
+
+.section {
+padding: 26px 0;
+}
+
+.section-title {
+display: flex;
+align-items: end;
+justify-content: space-between;
+gap: 18px;
+margin-bottom: 20px;
+}
+
+.section-title h2 {
+margin: 0;
+font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.section-title p {
+margin: 0;
+max-width: 60ch;
+color: var(--muted);
+}
+
+.projects {
+display: grid;
+gap: 22px;
+}
+
+.project {
+padding: 28px;
+}
+
+.project-grid {
+display: grid;
+grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+gap: 24px;
+}
+
+.project-head {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 14px;
+margin-bottom: 16px;
+}
+
+.project-icon {
+width: 56px;
+height: 56px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border-radius: 18px;
+font-size: 1.4rem;
+}
+
+.project-icon.security {
+background: rgba(77, 208, 168, 0.12);
+color: var(--primary);
+}
+
+.project-icon.automation {
+background: rgba(127, 200, 255, 0.12);
+color: var(--secondary);
+}
+
+.project-head h3 {
+margin: 0;
+font-size: 1.85rem;
+}
+
+.badge-row,
+.meta-stack,
+.link-list {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.chip {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 8px 12px;
+font-size: 0.88rem;
+background: rgba(255, 255, 255, 0.04);
+border: 1px solid rgba(170, 197, 224, 0.16);
+}
+
+.list {
+padding: 0;
+margin: 18px 0 0;
+list-style: none;
+display: grid;
+gap: 12px;
+}
+
+.list li {
+position: relative;
+padding-left: 20px;
+}
+
+.list li::before {
+content: "";
+position: absolute;
+left: 0;
+top: 0.7em;
+width: 8px;
+height: 8px;
+border-radius: 999px;
+background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.project-side {
+display: grid;
+gap: 14px;
+}
+
+.meta-card,
+.summary-card {
+padding: 18px;
+border-radius: var(--radius-lg);
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+border: 1px solid rgba(170, 197, 224, 0.14);
+}
+
+.meta-card h4,
+.summary-card h3 {
+margin: 0 0 10px;
+font-size: 1rem;
+}
+
+.meta-card p {
+margin: 0;
+}
+
+.meta-stack span,
+.link-list a {
+padding: 8px 12px;
+border-radius: 12px;
+background: rgba(255, 255, 255, 0.04);
+border: 1px solid rgba(170, 197, 224, 0.14);
 text-decoration: none;
 }
 
-/* Animations des roues dentées du logo */
-@keyframes spin {
-0% { transform: rotate(0deg); }
-100% { transform: rotate(360deg); }
+.link-list a:hover,
+.link-list a:focus-visible {
+border-color: rgba(127, 200, 255, 0.3);
+background: rgba(127, 200, 255, 0.08);
 }
-@keyframes spin-back {
-0% { transform: rotate(360deg); }
-100% { transform: rotate(0deg); }
+
+.summary-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 18px;
+}
+
+.summary-card ul {
+padding-left: 18px;
+margin: 0;
+}
+
+.summary-card li + li {
+margin-top: 8px;
+}
+
+.footer {
+padding: 30px 0 50px;
+}
+
+.footer-panel {
+padding: 24px 28px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
+}
+
+.footer-panel p {
+margin: 0;
+}
+
+@media (max-width: 980px) {
+.hero-panel,
+.project-grid,
+.summary-grid,
+.footer-panel {
+grid-template-columns: 1fr;
+display: grid;
+}
+
+.footer-panel {
+justify-content: start;
+}
+}
+
+@media (max-width: 760px) {
+.topbar-inner,
+.section-title {
+align-items: start;
+}
+
+.topbar-inner,
+.footer-panel {
+display: flex;
+flex-direction: column;
+}
+
+.hero-copy,
+.hero-aside,
+.project {
+padding: 22px;
+}
+
+.hero-copy h1 {
+max-width: none;
+}
 }
 </style>
 </head>
 <body>
-
-<header>
-<!-- Logo CSS "OiO" en lunettes-engrenages -->
-<div class="logo-oio">
-<span class="gear">⚙️</span><span class="bridge">i</span><span class="gear gear-reverse">⚙️</span>
-</div>
-<h1>OpenInfraOps</h1>
-<p>Vision for Automated & Secure Infrastructure.</p>
-</header>
-
-<div class="container">
-<div class="grid">
-
-<!-- Projet 1 : free-adfs-otp -->
-<div class="card">
-<div>
-<h2><i class="fa-solid fa-shield-halved" style="color: #3fb950;"></i> free-adfs-otp</h2>
-<p>Une solution open-source et on-premise pour intégrer facilement un second facteur d'authentification (MFA / OTP) sur Active Directory Federation Services (ADFS).</p>
-<div class="tags">
-<span class="tag">Identity Management</span>
-<span class="tag">MFA</span>
-<span class="tag">ADFS</span>
-<span class="tag">Security</span>
-</div>
-</div>
-<div>
-<a href="https://github.com/OpenInfraOps/free-adfs-otp" class="btn" target="_blank">
-<i class="fa-brands fa-github"></i> Découvrir le projet
+<div class="topbar">
+<div class="shell topbar-inner">
+<a class="brand" href="#top">
+<span class="brand-mark"><i class="fa-solid fa-layer-group"></i></span>
+<span class="brand-copy">
+<strong>OpenInfraOps</strong>
+<span>Portail de documentation des projets</span>
+</span>
 </a>
+<nav class="nav" aria-label="Navigation principale">
+<a href="#projects">Projets</a>
+<a href="#overview">Vue d'ensemble</a>
+<a href="https://github.com/OpenInfraOps" target="_blank" rel="noreferrer">Organisation GitHub</a>
+</nav>
 </div>
 </div>
 
-<!-- Projet 2 : powershell-dsc-pullserver -->
-<div class="card">
+<main id="top">
+<section class="hero">
+<div class="shell hero-panel">
+<div class="hero-copy">
+<span class="eyebrow"><i class="fa-brands fa-github"></i> Deux projets, un meme socle d'exploitation</span>
+<h1>Documentation rapide des projets OpenInfraOps.</h1>
+<p>Cette page sert d'entree unique pour comprendre les deux depots GitHub portes par OpenInfraOps: l'un cible la securisation d'AD FS avec OTP, l'autre industrialise PowerShell DSC avec un pull server moderne. Le but n'est pas seulement de lister des liens, mais de donner le contexte, les cas d'usage et les points d'entree utiles.</p>
+<div class="hero-actions">
+<a class="btn btn-primary" href="#projects"><i class="fa-solid fa-book-open"></i> Lire les projets</a>
+<a class="btn btn-secondary" href="https://github.com/OpenInfraOps" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i> Voir l'organisation</a>
+</div>
+</div>
+<aside class="hero-aside">
+<div class="aside-block">
+<h2>Positionnement</h2>
+<p>OpenInfraOps documente ici une approche pragmatique de l'infrastructure: securite d'identite cote Windows et automatisation declarative cote exploitation.</p>
+</div>
+<div class="aside-block">
+<h2>Ce que vous trouverez</h2>
+<p>Pour chaque depot: objectif, fonctionnalites clefs, pile technique, demarrage rapide et liens directs vers la documentation source.</p>
+</div>
+<div class="aside-block">
+<h2>Public vise</h2>
+<p>Administrateurs AD FS, ingenieurs infrastructure Windows, equipes IAM et exploitants qui veulent des solutions open-source et on-premise.</p>
+</div>
+</aside>
+</div>
+</section>
+
+<section class="section" id="projects">
+<div class="shell">
+<div class="section-title">
 <div>
-<h2><i class="fa-solid fa-terminal" style="color: #58a6ff;"></i> powershell-dsc-pullserver</h2>
-<p>Framework d'automatisation clé en main pour déployer et administrer un serveur Pull PowerShell DSC. Idéal pour piloter vos parcs Windows en mode Configuration as Code.</p>
-<div class="tags">
-<span class="tag">PowerShell</span>
-<span class="tag">DSC</span>
-<span class="tag">IaC</span>
-<span class="tag">Windows Server</span>
+<h2>Les deux projets</h2>
+<p>Les descriptions ci-dessous condensent les README publics des depots pour offrir une lecture rapide avant d'entrer dans la documentation detaillee sur GitHub.</p>
 </div>
 </div>
+
+<div class="projects">
+<article class="project">
+<div class="project-grid">
+<div class="project-copy">
+<div class="project-head">
+<span class="project-icon security"><i class="fa-solid fa-shield-halved"></i></span>
 <div>
-<a href="https://github.com/OpenInfraOps/powershell-dsc-pullserver" class="btn" target="_blank">
-<i class="fa-brands fa-github"></i> Découvrir le projet
-</a>
+<h3>free-adfs-otp</h3>
+<div class="badge-row">
+<span class="chip"><i class="fa-solid fa-lock"></i> MFA / OTP</span>
+<span class="chip"><i class="fa-solid fa-building-shield"></i> AD FS 2019/2022+</span>
+<span class="chip"><i class="fa-solid fa-server"></i> SQL Server</span>
+</div>
+</div>
+</div>
+<p>free-adfs-otp est une solution OTP open-source pour AD FS qui vise un deploiement on-premise. Le projet couvre l'enrolement utilisateur, la validation TOTP, l'administration des methodes OTP, le lockout et l'integration avec AD FS comme second facteur, puis comme facteur principal selon le mode retenu.</p>
+<ul class="list">
+<li>Validation OTP via API ou acces SQL direct dans l'adapter AD FS.</li>
+<li>Portail d'enrolement avec QR code, URI otpauth et identification par authentification Windows integree.</li>
+<li>Portail d'administration pour reset des methodes, debloquage et suivi des usages.</li>
+<li>Durcissement initial avec chiffrement AES, anti-replay TOTP, rate limiting et journalisation.</li>
+<li>Scripts de deploiement, rollback et packaging pour l'integration sur ferme AD FS.</li>
+</ul>
+</div>
+<aside class="project-side">
+<div class="meta-card">
+<h4>Pile technique</h4>
+<div class="meta-stack">
+<span>.NET 8</span>
+<span>.NET Framework 4.7</span>
+<span>ASP.NET Core</span>
+<span>PowerShell</span>
+<span>T-SQL</span>
+</div>
+</div>
+<div class="meta-card">
+<h4>Demarrage rapide</h4>
+<p>Base FreeAdfsOtp, scripts SQL d'initialisation, configuration des cles dans les appsettings, puis restore/build/run de l'API et des deux portails.</p>
+</div>
+<div class="meta-card">
+<h4>Liens directs</h4>
+<div class="link-list">
+<a href="https://github.com/OpenInfraOps/free-adfs-otp" target="_blank" rel="noreferrer">Depot</a>
+<a href="https://github.com/OpenInfraOps/free-adfs-otp/blob/main/docs/architecture.md" target="_blank" rel="noreferrer">Architecture</a>
+<a href="https://github.com/OpenInfraOps/free-adfs-otp/blob/main/docs/runbook-local.md" target="_blank" rel="noreferrer">Runbook local</a>
+<a href="https://github.com/OpenInfraOps/free-adfs-otp/releases" target="_blank" rel="noreferrer">Releases</a>
+</div>
+</div>
+</aside>
+</div>
+</article>
+
+<article class="project">
+<div class="project-grid">
+<div class="project-copy">
+<div class="project-head">
+<span class="project-icon automation"><i class="fa-solid fa-terminal"></i></span>
+<div>
+<h3>powershell-dsc-pullserver</h3>
+<div class="badge-row">
+<span class="chip"><i class="fa-solid fa-gears"></i> PowerShell DSC</span>
+<span class="chip"><i class="fa-solid fa-code-branch"></i> Gestion versionnee</span>
+<span class="chip"><i class="fa-solid fa-globe"></i> Web UI</span>
+</div>
+</div>
+</div>
+<p>powershell-dsc-pullserver est un pull server DSC securise et modulaire, ecrit en Go, avec API REST, interface web et module PowerShell de gestion. Il centralise configurations, modules, utilisateurs et rapports afin d'administrer un parc Windows en mode configuration as code.</p>
+<ul class="list">
+<li>Gestion centralisee des configurations MOF, modules DSC, utilisateurs et rapports d'execution.</li>
+<li>Interface web pour les operations courantes et la gouvernance des acces.</li>
+<li>API REST et module PowerShell pour l'administration distante.</li>
+<li>Documentation organisee par domaines: installation, securite, enregistrement des noeuds et Web UI.</li>
+<li>Approche orientee exploitation avec versioning, controles d'acces et stockage configurable.</li>
+</ul>
+</div>
+<aside class="project-side">
+<div class="meta-card">
+<h4>Pile technique</h4>
+<div class="meta-stack">
+<span>Go</span>
+<span>JavaScript</span>
+<span>Go templates</span>
+<span>PowerShell</span>
+<span>HTML/CSS</span>
+</div>
+</div>
+<div class="meta-card">
+<h4>Points d'entree doc</h4>
+<p>Le depot oriente explicitement la lecture vers deux blocs: documentation DSC Pull Server et documentation Web UI, avec une navigation rapide vers installation, securite et gestion des droits.</p>
+</div>
+<div class="meta-card">
+<h4>Liens directs</h4>
+<div class="link-list">
+<a href="https://github.com/OpenInfraOps/powershell-dsc-pullserver" target="_blank" rel="noreferrer">Depot</a>
+<a href="https://github.com/OpenInfraOps/powershell-dsc-pullserver/blob/main/doc/installation.md" target="_blank" rel="noreferrer">Installation</a>
+<a href="https://github.com/OpenInfraOps/powershell-dsc-pullserver/blob/main/doc/dscpull/README.md" target="_blank" rel="noreferrer">Doc DSC Pull</a>
+<a href="https://github.com/OpenInfraOps/powershell-dsc-pullserver/blob/main/doc/webui/README.md" target="_blank" rel="noreferrer">Doc Web UI</a>
+</div>
+</div>
+</aside>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<section class="section" id="overview">
+<div class="shell">
+<div class="section-title">
+<div>
+<h2>Vue d'ensemble</h2>
+<p>Les deux projets sont complementaires: le premier traite l'identite et la securisation de l'authentification, le second traite la standardisation et l'automatisation de la configuration des serveurs Windows.</p>
 </div>
 </div>
 
+<div class="summary-grid">
+<article class="summary-card">
+<h3>Quand utiliser free-adfs-otp</h3>
+<ul>
+<li>Vous devez ajouter un second facteur a AD FS sans sortir d'un modele on-premise.</li>
+<li>Vous avez besoin d'un enrolement utilisateur maitrise et d'un portail d'administration simple.</li>
+<li>Vous cherchez une base de travail open-source pour industrialiser MFA sur environnement Windows.</li>
+</ul>
+</article>
+<article class="summary-card">
+<h3>Quand utiliser powershell-dsc-pullserver</h3>
+<ul>
+<li>Vous voulez distribuer et versionner des configurations DSC a grande echelle.</li>
+<li>Vous souhaitez une interface web et une API pour gouverner l'infrastructure Windows.</li>
+<li>Vous cherchez a rendre PowerShell DSC plus operable au quotidien.</li>
+</ul>
+</article>
+<article class="summary-card">
+<h3>Lecture recommandee</h3>
+<ul>
+<li>Commencer ici pour le cadrage fonctionnel et technique.</li>
+<li>Poursuivre avec les README et les dossiers de documentation des depots.</li>
+<li>Utiliser ensuite les releases et runbooks pour les validations terrain.</li>
+</ul>
+</article>
 </div>
 </div>
+</section>
+</main>
 
-<footer>
-<p>© 2026 OpenInfraOps. Tous les projets sont distribués sous licence open-source.</p>
-<p>Maintenu par l'organisation <a href="https://github.com/OpenInfraOps">OpenInfraOps</a></p>
+<footer class="footer">
+<div class="shell footer-panel">
+<p>OpenInfraOps centralise ici deux projets GitHub axes sur la securite et l'automatisation de l'infrastructure Windows.</p>
+<p><a href="https://github.com/OpenInfraOps" target="_blank" rel="noreferrer">github.com/OpenInfraOps</a></p>
+</div>
 </footer>
-
 </body>
 </html>
